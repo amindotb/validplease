@@ -1,0 +1,23 @@
+{
+  "name": "validplease",
+  "version": "1.0.1",
+  "description": "A validator package with built-in Persian messages.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "keywords": [
+    "validator",
+    "valid",
+    "persian",
+    "validator",
+    "farsi",
+    "validator"
+  ],
+  "author": "Amin Bagheri",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "dependencies": {}
+}
