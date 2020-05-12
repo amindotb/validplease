@@ -14,7 +14,7 @@ module.exports = class ValidPlease {
         return this;
     }
 
-    allias(alias)
+    aliasName(alias)
     {
         this.alias = alias;
         return this;
@@ -58,19 +58,28 @@ module.exports = class ValidPlease {
     isInt()
     {
       this._check();
-      if (isNaN(this.input)) 
+      if (isNaN(this.input) || this.input === '') 
         return this._break(`مقدار پارامتر ${this._alias()} را به صورت عددی وارد نمایید`);
       else
           return this;
     }
 
+    isBoolean()
+    {
+        this._check();
+        if(this.input === false || this.input === true)
+            return this;
+        else
+            return this._break(`مقدار پارامتر ${this._alias()} را به صورت درست،غلط ارسال نمایید`);
+    }
+
     isEmail()
     {
       this._check();
-      if(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
-      else
+      if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
         return this;
+      else
+        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
     }
 
     isDate(separator='-')
@@ -84,21 +93,81 @@ module.exports = class ValidPlease {
             return this;
     }
 
-    isCardNumber()
+    isMeliCode()
     {
-
+        this._check();
+        let code = '' + this.input;
+        let len = code.length;
+        if(len < 8 || parseInt(code ,10)==0) return false;
+            code=('0000'+code).substr(len - 6);
+        if(parseInt(code.substr(3,6),10)==0) return false;
+            let c=parseInt(code.substr(9,1),10);
+        let s=0;
+        for(let i=0;i<9;i++)
+            s+=parseInt(code.substr(i,1),10)*(10-i);
+        s=s%11;
+        if((s<2 && c==s) || (s>=2 && c==(11-s)))
+        {
+            return this;
+        }
+        else
+            return this._break(`مقدار کد ملی را به درستی وارد نمایید`);
     }
 
-    isMeliNumber()
+    isPersian()
     {
+        this._check();
+        const regex = new RegExp(/^[\u0600-\u06F9\s]+$/);
+        if(!regex.test(this.input))
+          return this._break(`پارامتر ${this._alias()} را به فارسی وارد کنید`);
+          else
+              return this;
+    }
 
+    isEnglish()
+    {
+        this._check();
+        const regex = new RegExp(/^[A-z0-9\s]+$/);
+        if(!regex.test(this.input))
+          return this._break(`پارامتر ${this._alias()} را به انگلیسی وارد کنید`);
+          else
+              return this;
+    }
+
+    isPersianDigit()
+    {
+        this._check();
+        const regex = new RegExp(/^[\u06F0-\u06F9]+$/);
+        if(!regex.test(this.input))
+          return this._break(`پارامتر ${this._alias()} را به اعداد فارسی وارد کنید`);
+          else
+              return this;
+    }
+
+    isEnglishDigit()
+    {
+        this._check();
+        const regex = new RegExp(/^[0-9]+$/);
+        if(!regex.test(this.input))
+          return this._break(`پارامتر ${this._alias()} را به اعداد انگلیسی وارد کنید`);
+          else
+              return this;
     }
 
     isIP()
     {
       this._check();
-      const pattern = `\\b^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$\\b`;
-      const regex = new RegExp(pattern);
+      const regex = new RegExp(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/);
+      if(!regex.test(this.input))
+        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        else
+            return this;
+    }
+
+    isIPv6()
+    {
+      this._check();
+      const regex = new RegExp(/^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
         else
@@ -108,8 +177,8 @@ module.exports = class ValidPlease {
     isVersion()
     {
       this._check();
-      const pattern = `\\b^\\d+\.?\\d+\.?\\d+\.?\\d*$\\b`;
-      const regex = new RegExp(pattern);
+      const pattern = `\\b^\\d+\.\?\\d+\.?\\d+\.?\\d*$\\b`;
+      const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
         else
