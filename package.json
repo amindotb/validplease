@@ -1,6 +1,6 @@
 {
   "name": "validplease",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A validator package with built-in Persian messages.",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,16 @@
   "devDependencies": {
     "jest": "^26.0.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amindotb/validplease.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amindotb/validplease/issues"
+  },
+  "homepage": "https://github.com/amindotb/validplease#readme"
 }
