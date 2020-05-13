@@ -1,7 +1,8 @@
 validplease
 ------------
 A JS module for input validation with custom Persian message.
-[logo]: https://cdn.dribbble.com/users/2129809/screenshots/4788950/validate1.png "Thanks to rimadarji @https://dribbble.com/rimadarji"
+[![Thanks to rimadarji](https://cdn.dribbble.com/users/2129809/screenshots/4788950/validate1.png "Thanks to rimadarji")](https://dribbble.com/rimadarji "Thanks to rimadarji")
+
 
 
 ### Warm Up
