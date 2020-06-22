@@ -52,10 +52,14 @@ console.log('output:', result);
 
 // console result:
 // output: ValidPlease {
-//  message: 'پارامتر آدرس ایمیل را به درستی وارد نمایید',
+//  message: 'پارامتر آدرس ایمیل را به صورت یک آدرس ایمیل صحیح وارد نمایید',
 //  success: false
 // }
  ```
+
+
+### Methods
+------------
 
 
 

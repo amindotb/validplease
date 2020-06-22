@@ -37,7 +37,7 @@ module.exports = class ValidPlease {
         this.input = parseInt(this.input);
         
         if(m < this.input)
-            return this._break(`مقدار پارامتر ${this._alias()} بیشتر از مقدار درخواستی است`);
+            return this._break(`مقدار پارامتر ${this._alias()} بیشتر از مقدار درخواستی (${m}) است`);
         else
             return this;
     }
@@ -50,7 +50,27 @@ module.exports = class ValidPlease {
         this.input = parseInt(this.input);
 
         if(m > this.input)
-            return this._break(`مقدار پارامتر ${this._alias()} کمتر از مقدار درخواستی است`);
+            return this._break(`مقدار پارامتر ${this._alias()} کمتر از مقدار درخواستی (${m}) است`);
+        else
+            return this;
+    }
+
+    maxLen(m) {
+        this._check();
+        const len = this.input.toString().length;
+        
+        if(m < len)
+            return this._break(`طول پارامتر ${this._alias()} بیشتر از مقدار درخواستی (${m}) است`);
+        else
+            return this;
+    }
+
+    minLen(m) {
+        this._check();
+        const len = this.input.toString().length;
+        
+        if(m > len)
+            return this._break(`طول پارامتر ${this._alias()} کمتر از مقدار درخواستی (${m}) است`);
         else
             return this;
     }
@@ -79,8 +99,18 @@ module.exports = class ValidPlease {
       if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
         return this;
       else
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()} را به صورت یک آدرس ایمیل صحیح وارد نمایید`);
     }
+
+    isMobile()
+    {
+      this._check();
+      if(/^09\d{9}$/.test(this.input))
+        return this;
+      else
+        return this._break(`پارامتر ${this._alias()} را به فرمت موبایل ...09 وارد نمایید`);
+    }
+
 
     isDate(separator='-')
     {
@@ -98,10 +128,12 @@ module.exports = class ValidPlease {
         this._check();
         let code = '' + this.input;
         let len = code.length;
-        if(len < 8 || parseInt(code ,10)==0) return false;
-            code=('0000'+code).substr(len - 6);
-        if(parseInt(code.substr(3,6),10)==0) return false;
-            let c=parseInt(code.substr(9,1),10);
+        if(len < 8 || parseInt(code ,10)==0) 
+            return false;
+        code=('0000'+code).substr(len - 6);
+        if(parseInt(code.substr(3,6),10)==0) 
+            return false;
+        let c=parseInt(code.substr(9,1),10);
         let s=0;
         for(let i=0;i<9;i++)
             s+=parseInt(code.substr(i,1),10)*(10-i);
@@ -177,10 +209,17 @@ module.exports = class ValidPlease {
     isVersion()
     {
       this._check();
-      const pattern = `\\b^\\d+\.\?\\d+\.?\\d+\.?\\d*$\\b`;
       const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        else
+            return this;
+    }
+
+    pattern(pat) {
+        const regex = new RegExp(pat);
+        if(!regex.test(this.input))
+            return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
         else
             return this;
     }

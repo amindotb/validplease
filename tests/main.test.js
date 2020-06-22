@@ -33,6 +33,38 @@ describe("Checking scope: required()", () => {
     });
 });
 
+describe("Checking scope: max()", () => {
+    
+    test('On minimum number', ()=> {
+        const res = new VP().v(10).max(5);
+        expect(res.success).toBe(false);
+    });
+
+    test('On maximum number', ()=> {
+        const res = new VP().v(10).max(20);
+        expect(res.success).toBe(true);
+    });
+
+    test('On minimum number in strgin format', ()=> {
+        const res = new VP().v('10').max(5);
+        expect(res.success).toBe(false);
+    });
+
+    test('On maximum number', ()=> {
+        const res = new VP().v('10').max(20);
+        expect(res.success).toBe(true);
+    });
+
+    test('On not number', ()=> {
+        const res = new VP().v('aa').max(20);
+        expect(res.success).toBe(false);
+    });
+
+    test('On number and string', ()=> {
+        const res = new VP().v('102a').max(20);
+        expect(res.success).toBe(false);
+    });
+});
 
 describe("Checking scope: min()", () => {
     
@@ -67,35 +99,78 @@ describe("Checking scope: min()", () => {
     });
 });
 
-describe("Checking scope: max()", () => {
+describe("Checking scope: maxLen()", () => {
     
     test('On minimum number', ()=> {
-        const res = new VP().v(10).max(5);
-        expect(res.success).toBe(false);
+        const res = new VP().v(10).maxLen(20);
+        expect(res.success).toBe(true);
     });
 
     test('On maximum number', ()=> {
-        const res = new VP().v(10).max(20);
+        const res = new VP().v(10).maxLen(2);
         expect(res.success).toBe(true);
     });
 
     test('On minimum number in strgin format', ()=> {
-        const res = new VP().v('10').max(5);
-        expect(res.success).toBe(false);
-    });
-
-    test('On maximum number', ()=> {
-        const res = new VP().v('10').max(20);
+        const res = new VP().v('10').maxLen(5);
         expect(res.success).toBe(true);
     });
 
-    test('On not number', ()=> {
-        const res = new VP().v('aa').max(20);
+    test('On maximum number', ()=> {
+        const res = new VP().v('10').maxLen(2);
+        expect(res.success).toBe(true);
+    });
+
+    test('On not number and correct len', ()=> {
+        const res = new VP().v('aabbb').maxLen(4);
         expect(res.success).toBe(false);
     });
 
     test('On number and string', ()=> {
-        const res = new VP().v('102a').max(20);
+        const res = new VP().v('102a').maxLen(20);
+        expect(res.success).toBe(true);
+    });
+
+    test('On not number', ()=> {
+        const res = new VP().v('aa').maxLen(20);
+        expect(res.success).toBe(true);
+    });
+});
+
+describe("Checking scope: minLen()", () => {
+    
+    test('On minimum number', ()=> {
+        const res = new VP().v(10).minLen(5);
+        expect(res.success).toBe(false);
+    });
+
+    test('On maximum number', ()=> {
+        const res = new VP().v(10).minLen(2);
+        expect(res.success).toBe(true);
+    });
+
+    test('On minimum number in strgin format', ()=> {
+        const res = new VP().v('10').minLen(5);
+        expect(res.success).toBe(false);
+    });
+
+    test('On maximum number', ()=> {
+        const res = new VP().v('10').minLen(2);
+        expect(res.success).toBe(true);
+    });
+
+    test('On not number and correct len', ()=> {
+        const res = new VP().v('aabbb').minLen(4);
+        expect(res.success).toBe(true);
+    });
+
+    test('On number and string', ()=> {
+        const res = new VP().v('102a').minLen(20);
+        expect(res.success).toBe(false);
+    });
+
+    test('On not number', ()=> {
+        const res = new VP().v('aa').minLen(20);
         expect(res.success).toBe(false);
     });
 });
@@ -180,7 +255,7 @@ describe("Checking scope: isEmail()", () => {
         expect(res.success).toBe(true);
     });
 
-    test('On incorrect email doman', ()=> {
+    test('On incorrect email domain', ()=> {
         const res = new VP().v('johndoe@.com').isEmail();
         expect(res.success).toBe(false);
     });
@@ -206,6 +281,52 @@ describe("Checking scope: isEmail()", () => {
     });
     
 });
+
+
+describe("Checking scope: isMobile()", () => {
+    
+    test('On correct mobile', ()=> {
+        const res = new VP().v('09123456789').isMobile();
+        expect(res.success).toBe(true);
+    });
+
+    test('On other correct mobile', ()=> {
+        const res = new VP().v('09362345678').isMobile();
+        expect(res.success).toBe(true);
+    });
+
+    test('On incorrect mobile length', ()=> {
+        const res = new VP().v('0912345678').isMobile();
+        expect(res.success).toBe(false);
+    });
+
+    test('On missing 09', ()=> {
+        const res = new VP().v('80123456789').isMobile();
+        expect(res.success).toBe(false);
+    });
+
+    test('On +98', ()=> {
+        const res = new VP().v('+989123456789').isMobile();
+        expect(res.success).toBe(false);
+    });
+
+    test('On 0098', ()=> {
+        const res = new VP().v('00989123456789').isMobile();
+        expect(res.success).toBe(false);
+    });
+
+    test('On 98', ()=> {
+        const res = new VP().v('989123456789').isMobile();
+        expect(res.success).toBe(false);
+    });
+
+    test('On mobile with string', ()=> {
+        const res = new VP().v('09ab3456789').isMobile();
+        expect(res.success).toBe(false);
+    });
+    
+});
+
 
 describe("Checking scope: isDate()", () => {
     
