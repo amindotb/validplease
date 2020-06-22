@@ -71,7 +71,7 @@ console.log('output:', result);
 .isBoolean()                        // Checks the input to be boolean (=== true|false)
 .isEmail()                          // Checks the input to be a valid email address
 .isMobile()                         // Checks the input to be a valid Iranian format mobile number (eg: 09123456789)
-.isDate()                           // Checks the input to be valid date (eg: 1399-03-25)
+.isDate('separator eg:-')           // Checks the input to be valid date (eg: 1399-03-25)
 .isMeliCode()                       // Checks the input to be a valid Iranian natinal code format (Code Meli)
 .isPersian()                        // Checks if a valid Persian language character detected
 .isEnglish()                        // Checks if all characters are in English language
