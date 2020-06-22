@@ -9,10 +9,10 @@ A JS module for input validation with custom Persian message.
 ------------
 Why should i use `validplease`?
  - Local in IR-FA.
+ - Zero dependency.
  - More than 75 unit tests. 100% methods coverage.
  - No data leakage in message.
  - Clean an clear Persian message.
- - Zero dependency.
  - Customizable.
  - Simple. You can simply jump into the code and make a pull for you changes.
 
@@ -31,11 +31,13 @@ npm i validplease
  const vp = new VP();
  ```
 
- ### Samples
+### Samples
 ------------
  ```
 const result = vp.v('johndoe@gmail.com').required().isEmail();
 console.log('output:', result);
+
+// console result:
 // output: ValidPlease {
 //  input: 'johndoe@gmail.com',
 //  alias: null,
@@ -47,6 +49,8 @@ console.log('output:', result);
   ```
 const result = vp.v('something that is not an email address').aliasName('آدرس ایمیل').required().isEmail();
 console.log('output:', result);
+
+// console result:
 // output: ValidPlease {
 //  message: 'پارامتر آدرس ایمیل را به درستی وارد نمایید',
 //  success: false
@@ -56,4 +60,4 @@ console.log('output:', result);
 
 
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![](https://img.shields.io/bower/v/editor.md.svg)
+![](https://img.shields.io/github/stars/amindotb/validplease.svg) ![](https://img.shields.io/github/forks/amindotb/validplease.svg) ![](https://img.shields.io/github/tag/amindotb/validplease.svg) ![](https://img.shields.io/github/release/amindotb/validplease.svg) ![](https://img.shields.io/github/issues/amindotb/validplease.svg)
