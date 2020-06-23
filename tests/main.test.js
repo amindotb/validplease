@@ -117,6 +117,11 @@ describe("Checking scope: len()", () => {
         expect(res.success).toBe(true);
     });
 
+    test('On number with string', ()=> {
+        const res = new VP().v('12345a').len(6);
+        expect(res.success).toBe(true);
+    });
+
     test('On number with invalid length', ()=> {
         const res = new VP().v('10').len(5);
         expect(res.success).toBe(false);

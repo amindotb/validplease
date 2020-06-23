@@ -1,6 +1,6 @@
 {
   "name": "validplease",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A validator package with built-in Persian messages.",
   "main": "index.js",
   "scripts": {

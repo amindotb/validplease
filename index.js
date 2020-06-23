@@ -36,12 +36,13 @@ module.exports = class ValidPlease {
 
     max(m) {
         this._check();
-        if (isNaN(this.input)) { 
+        let temp = this.input;
+        if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
-        this.input = parseInt(this.input);
+        temp = parseInt(temp);
         
-        if(m < this.input)
+        if(m < temp)
             return this._break(`مقدار پارامتر ${this._alias()}بیشتر از مقدار درخواستی (${m}) است`);
         else
             return this;
@@ -49,12 +50,13 @@ module.exports = class ValidPlease {
 
     min(m) {
         this._check();
-        if (isNaN(this.input)) { 
+        let temp = this.input;
+        if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
-        this.input = parseInt(this.input);
+        temp = parseInt(temp);
 
-        if(m > this.input)
+        if(m > temp)
             return this._break(`مقدار پارامتر ${this._alias()}کمتر از مقدار درخواستی (${m}) است`);
         else
             return this;
@@ -99,7 +101,8 @@ module.exports = class ValidPlease {
     isInt()
     {
       this._check();
-      if (isNaN(+this.input) || this.input === '') 
+      let temp = this.input;
+      if (isNaN(+temp) || temp === '') 
         return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
       else
           return this;
