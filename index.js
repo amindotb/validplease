@@ -57,7 +57,9 @@ module.exports = class ValidPlease {
 
     maxLen(m) {
         this._check();
-        const len = this.input.toString().length;
+        let temp = this.input;
+        temp = temp.toString();
+        const len = temp.length;
         
         if(m < len)
             return this._break(`طول پارامتر ${this._alias()} بیشتر از مقدار درخواستی (${m}) است`);
@@ -67,7 +69,9 @@ module.exports = class ValidPlease {
 
     minLen(m) {
         this._check();
-        const len = this.input.toString().length;
+        let temp = this.input;
+        temp = temp.toString();
+        const len = temp.length;
         
         if(m > len)
             return this._break(`طول پارامتر ${this._alias()} کمتر از مقدار درخواستی (${m}) است`);
