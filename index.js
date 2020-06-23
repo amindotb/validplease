@@ -10,13 +10,18 @@ module.exports = class ValidPlease {
 
     v(inputs)
     {
+        this.input = null;
+        this.alias = null;
+        this.message = null;
+        this.success = true;
+
         this.input = inputs;
         return this;
     }
 
     aliasName(alias)
     {
-        this.alias = alias;
+        this.alias = alias + ' ';
         return this;
     }
 
@@ -24,7 +29,7 @@ module.exports = class ValidPlease {
     {
         this._check();
         if(this.input == null || this.input == undefined || this.input === '')
-            return this._break(`مقدار پارامتر ${this._alias()} اجباریست`);
+            return this._break(`مقدار پارامتر ${this._alias()}اجباریست`);
         else
             return this;
     }
@@ -32,12 +37,12 @@ module.exports = class ValidPlease {
     max(m) {
         this._check();
         if (isNaN(this.input)) { 
-          return this._break(`مقدار پارامتر ${this._alias()} را به صورت عددی وارد نمایید`);
+          return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
         this.input = parseInt(this.input);
         
         if(m < this.input)
-            return this._break(`مقدار پارامتر ${this._alias()} بیشتر از مقدار درخواستی (${m}) است`);
+            return this._break(`مقدار پارامتر ${this._alias()}بیشتر از مقدار درخواستی (${m}) است`);
         else
             return this;
     }
@@ -45,12 +50,24 @@ module.exports = class ValidPlease {
     min(m) {
         this._check();
         if (isNaN(this.input)) { 
-          return this._break(`مقدار پارامتر ${this._alias()} را به صورت عددی وارد نمایید`);
+          return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
         this.input = parseInt(this.input);
 
         if(m > this.input)
-            return this._break(`مقدار پارامتر ${this._alias()} کمتر از مقدار درخواستی (${m}) است`);
+            return this._break(`مقدار پارامتر ${this._alias()}کمتر از مقدار درخواستی (${m}) است`);
+        else
+            return this;
+    }
+
+    len(m) {
+        this._check();
+        let temp = this.input;
+        temp = temp + '';
+        const len = temp.length;
+        
+        if(m !== len)
+            return this._break(`طول پارامتر ${this._alias()}باید (${m}) کاراکتر باشد`);
         else
             return this;
     }
@@ -62,7 +79,7 @@ module.exports = class ValidPlease {
         const len = temp.length;
         
         if(m < len)
-            return this._break(`طول پارامتر ${this._alias()} بیشتر از مقدار درخواستی (${m}) است`);
+            return this._break(`طول پارامتر ${this._alias()}بیشتر از (${m}) کاراکتر است`);
         else
             return this;
     }
@@ -74,7 +91,7 @@ module.exports = class ValidPlease {
         const len = temp.length;
         
         if(m > len)
-            return this._break(`طول پارامتر ${this._alias()} کمتر از مقدار درخواستی (${m}) است`);
+            return this._break(`طول پارامتر ${this._alias()}کمتر از (${m}) کاراکتر است`);
         else
             return this;
     }
@@ -82,8 +99,8 @@ module.exports = class ValidPlease {
     isInt()
     {
       this._check();
-      if (isNaN(this.input) || this.input === '') 
-        return this._break(`مقدار پارامتر ${this._alias()} را به صورت عددی وارد نمایید`);
+      if (isNaN(+this.input) || this.input === '') 
+        return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
       else
           return this;
     }
@@ -94,7 +111,7 @@ module.exports = class ValidPlease {
         if(this.input === false || this.input === true)
             return this;
         else
-            return this._break(`مقدار پارامتر ${this._alias()} را به صورت درست،غلط ارسال نمایید`);
+            return this._break(`مقدار پارامتر ${this._alias()}را به صورت درست،غلط ارسال نمایید`);
     }
 
     isEmail()
@@ -103,7 +120,7 @@ module.exports = class ValidPlease {
       if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
         return this;
       else
-        return this._break(`پارامتر ${this._alias()} را به صورت یک آدرس ایمیل صحیح وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به صورت یک آدرس ایمیل صحیح وارد نمایید`);
     }
 
     isMobile()
@@ -112,7 +129,7 @@ module.exports = class ValidPlease {
       if(/^09\d{9}$/.test(this.input))
         return this;
       else
-        return this._break(`پارامتر ${this._alias()} را به فرمت موبایل ...09 وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به فرمت موبایل ...09 وارد نمایید`);
     }
 
 
@@ -122,7 +139,7 @@ module.exports = class ValidPlease {
       const pattern = `\\b^[0-9]{4}${separator}(0[1-9]|1[0-2])${separator}(0[1-9]|[1-2][0-9]|3[0-1])$\\b`;
       const regex = new RegExp(pattern);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;
     }
@@ -155,7 +172,7 @@ module.exports = class ValidPlease {
         this._check();
         const regex = new RegExp(/^[\u0600-\u06F9\s]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()} را به فارسی وارد کنید`);
+          return this._break(`پارامتر ${this._alias()}را به فارسی وارد کنید`);
           else
               return this;
     }
@@ -165,7 +182,7 @@ module.exports = class ValidPlease {
         this._check();
         const regex = new RegExp(/^[A-z0-9\s]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()} را به انگلیسی وارد کنید`);
+          return this._break(`پارامتر ${this._alias()}را به انگلیسی وارد کنید`);
           else
               return this;
     }
@@ -175,7 +192,7 @@ module.exports = class ValidPlease {
         this._check();
         const regex = new RegExp(/^[\u06F0-\u06F9]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()} را به اعداد فارسی وارد کنید`);
+          return this._break(`پارامتر ${this._alias()}را به اعداد فارسی وارد کنید`);
           else
               return this;
     }
@@ -185,7 +202,7 @@ module.exports = class ValidPlease {
         this._check();
         const regex = new RegExp(/^[0-9]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()} را به اعداد انگلیسی وارد کنید`);
+          return this._break(`پارامتر ${this._alias()}را به اعداد انگلیسی وارد کنید`);
           else
               return this;
     }
@@ -195,7 +212,7 @@ module.exports = class ValidPlease {
       this._check();
       const regex = new RegExp(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;
     }
@@ -205,7 +222,7 @@ module.exports = class ValidPlease {
       this._check();
       const regex = new RegExp(/^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;
     }
@@ -215,7 +232,7 @@ module.exports = class ValidPlease {
       this._check();
       const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;
     }
@@ -223,7 +240,7 @@ module.exports = class ValidPlease {
     pattern(pat) {
         const regex = new RegExp(pat);
         if(!regex.test(this.input))
-            return this._break(`پارامتر ${this._alias()} را به درستی وارد نمایید`);
+            return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;
     }

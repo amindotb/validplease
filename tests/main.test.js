@@ -99,6 +99,40 @@ describe("Checking scope: min()", () => {
     });
 });
 
+
+describe("Checking scope: len()", () => {
+    
+    test('On number', ()=> {
+        const res = new VP().v(10).len(2);
+        expect(res.success).toBe(true);
+    });
+
+    test('On number in string format', ()=> {
+        const res = new VP().v("10").len(2);
+        expect(res.success).toBe(true);
+    });
+
+    test('On string', ()=> {
+        const res = new VP().v('abcd123').len(7);
+        expect(res.success).toBe(true);
+    });
+
+    test('On number with invalid length', ()=> {
+        const res = new VP().v('10').len(5);
+        expect(res.success).toBe(false);
+    });
+
+    test('On number in string format with invalid length', ()=> {
+        const res = new VP().v("10").len(0);
+        expect(res.success).toBe(false);
+    });
+
+    test('On string with invalid length', ()=> {
+        const res = new VP().v('abcd123').len(1);
+        expect(res.success).toBe(false);
+    });
+});
+
 describe("Checking scope: maxLen()", () => {
     
     test('On minimum number', ()=> {
