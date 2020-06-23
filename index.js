@@ -58,7 +58,7 @@ module.exports = class ValidPlease {
     maxLen(m) {
         this._check();
         let temp = this.input;
-        temp = temp.toString();
+        temp = temp + '';
         const len = temp.length;
         
         if(m < len)
@@ -70,7 +70,7 @@ module.exports = class ValidPlease {
     minLen(m) {
         this._check();
         let temp = this.input;
-        temp = temp.toString();
+        temp = temp + '';
         const len = temp.length;
         
         if(m > len)
