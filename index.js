@@ -170,6 +170,26 @@ module.exports = class ValidPlease {
             return this._break(`مقدار کد ملی را به درستی وارد نمایید`);
     }
 
+    isPostalCode()
+    {      
+        this._check();
+        const regex = new RegExp(/^(\d{5}-?\d{5})$/);
+        if(!regex.test(this.input))
+          return this._break(`کد پستی را به درستی وارد کنید`);
+          else
+              return this;
+    }
+
+    isPhone()
+    {      
+        this._check();
+        const regex = new RegExp(/^[2-9][0-9]{7}$/);
+        if(!regex.test(this.input))
+          return this._break(`شماره تلفن را به درستی وارد کنید`);
+          else
+              return this;
+    }
+
     isPersian()
     {
         this._check();
@@ -235,6 +255,16 @@ module.exports = class ValidPlease {
       this._check();
       const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
+        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        else
+            return this;
+    }
+
+    isIn(arr)
+    {
+      this._check();
+      
+      if(!arr.includes(this.input))
         return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
         else
             return this;

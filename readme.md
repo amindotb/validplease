@@ -1,6 +1,7 @@
 validplease
 ------------
 A JS module for input validation with custom Persian message.
+Keep your eyes on new changes 🤩 in version 2.x (scoll down to see new methods)
 [![Thanks to rimadarji](https://cdn.dribbble.com/users/2129809/screenshots/4788950/validate1.png "Thanks to rimadarji")](https://dribbble.com/rimadarji "Thanks to rimadarji")
 
 
@@ -10,7 +11,7 @@ A JS module for input validation with custom Persian message.
 Why should i use `validplease`?
  - Local in IR-FA.
  - Zero dependency.
- - More than 100 unit tests. 100% methods coverage.
+ - More than 110 unit tests. 100% methods coverage.
  - No data leakage in message.
  - Clean an clear Persian message.
  - Customizable.
@@ -27,7 +28,7 @@ npm i validplease
 ### Usage
 ------------
  ```
- const VP = requre('validplease');
+ const VP = require('validplease');
  const vp = new VP();
  ```
 
@@ -61,27 +62,77 @@ console.log('output:', result);
 ### Methods
 ------------
 
-```.aliasName('Your alliar name')```        // The Alias name for this variable which is going to use in messages  
-```.required()```                           // Checks variable must be set  
-```.max(maximum number)```                  // Checks the input to be lower than maximum number  
-```.min(minimum number)```                  // Checks the input to be greater than minimum number 
-```.len(length)```                          // Checks the length of input to be equal with given length
-```.maxLen(maximum number)```               // Checks the length of input to be lower than maximum number  
-```.minLen(minimum number)```               // Checks the length of input to be greater than maximum number  
-```.isInt()```                              // Checks the input must be number  
-```.isBoolean()```                          // Checks the input to be boolean (=== true|false)  
-```.isEmail()```                            // Checks the input to be a valid email address  
-```.isMobile()```                           // Checks the input to be a valid Iranian format mobile number (eg: 09123456789)  
-```.isDate('separator eg:-')```             // Checks the input to be valid date (eg: 1399-03-25)  
-```.isMeliCode()```                         // Checks the input to be a valid Iranian natinal code format (Code Meli) 
-```.isPersian()```                          // Checks if a valid Persian language character detected  
-```.isEnglish()```                          // Checks if all characters are in English language  
-```.isPersianDigit()```                     // Checks if all characters are in Persian language digit  
-```.isEnglishDigit()```                     // Checks if all characters are in English language digit  
-```.isIP()```                               // Checks the input to be a valid IP address in v4 format  
-```.isIPv6()```                             // Checks the input to be a valid IP address in v6 format  
-```.isVersion()```                          // Checks the input if it's a valid software version with maximum 4 scopes (major.minor.patch.build eg: 1.2 | 1.2.3 | 1.2.3.4)  
-```.pattern('Given pattern')```             // Checks given pattern on the input    
+```.aliasName('Your alliar name')```        
+// The Alias name for this variable which is going to use in messages  
+
+```.required()```                           
+// Checks variable must be set  
+
+```.max(maximum number)```                  
+// Checks the input to be lower than maximum number  
+
+```.min(minimum number)```                  
+// Checks the input to be greater than minimum number 
+
+```.len(length)```                          
+// Checks the length of input to be equal with given length
+
+```.maxLen(maximum number)```               
+// Checks the length of input to be lower than maximum number  
+
+```.minLen(minimum number)```               
+// Checks the length of input to be greater than maximum number  
+
+```.isInt()```                              
+// Checks the input must be number  
+
+```.isBoolean()```                          
+// Checks the input to be boolean (=== true|false)  
+
+```.isEmail()```                            
+// Checks the input to be a valid email address  
+
+```.isMobile()```                           
+// Checks the input to be a valid Iranian format mobile number (eg: 09123456789)  
+
+```.isDate('separator eg:-')```             
+// Checks the input to be valid date (eg: 1399-03-25)  
+
+```.isMeliCode()```                         
+// Checks the input to be a valid Iranian natinal code format (Code Meli) 
+
+```.isPostalCode()```                          
+// Checks if is a valid postal code  
+
+```.isPhone()```                          
+// Checks if is a valid phone number  
+
+```.isPersian()```                          
+// Checks if a valid Persian language character detected 
+
+```.isEnglish()```                          
+// Checks if all characters are in English language  
+
+```.isPersianDigit()```                     
+// Checks if all characters are in Persian language digit  
+
+```.isEnglishDigit()```                     
+// Checks if all characters are in English language digit  
+
+```.isIP()```                               
+// Checks the input to be a valid IP address in v4 format  
+
+```.isIPv6()```                             
+// Checks the input to be a valid IP address in v6 format  
+
+```.isVersion()```                          
+// Checks the input if it's a valid software version with maximum 4 scopes (major.minor.patch.build eg: 1.2 | 1.2.3 | 1.2.3.4)  
+
+```.isIn(your array)```             
+// Checks is in array  
+
+```.pattern('Given pattern')```             
+// Checks given pattern on the input    
 
 
 ![](https://img.shields.io/github/stars/amindotb/validplease.svg) ![](https://img.shields.io/github/forks/amindotb/validplease.svg) ![](https://img.shields.io/github/tag/amindotb/validplease.svg) ![](https://img.shields.io/github/release/amindotb/validplease.svg) ![](https://img.shields.io/github/issues/amindotb/validplease.svg)

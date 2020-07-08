@@ -415,6 +415,39 @@ describe("Checking scope: isMeliCode()", () => {
     
 });
 
+describe("Checking scope: isPostalCode()", () => {
+    
+    test('on postal code', ()=> {
+        const res = new VP().v(9876543210).isPostalCode();
+        expect(res.success).toBe(true);
+    });
+
+    test('on postal code with dash', ()=> {
+        const res = new VP().v('98765-43210').isPostalCode();
+        expect(res.success).toBe(true);
+    });
+
+    test('On not postal code', ()=> {
+        const res = new VP().v(987654321).isPostalCode();
+        expect(res.success).toBe(false);
+    });
+
+});
+
+describe("Checking scope: isPhone()", () => {
+    
+    test('on phone number', ()=> {
+        const res = new VP().v(99887766).isPhone();
+        expect(res.success).toBe(true);
+    });
+
+    test('On not phone number', ()=> {
+        const res = new VP().v(998877665).isPhone();
+        expect(res.success).toBe(false);
+    });
+
+});
+
 describe("Checking scope: isPersian()", () => {
     
     test('On Persian string', ()=> {
@@ -556,6 +589,20 @@ describe("Checking scope: isIPv6()", () => {
 
     test('On incorrect IPv6 with missing part', ()=> {
         const res = new VP().v('fe80:f:200:5aee:feaa:20a2').isIPv6();
+        expect(res.success).toBe(false);
+    });
+
+});
+
+describe("Checking scope: isIn()", () => {
+    
+    test('on included', ()=> {
+        const res = new VP().v('abc').isIn(['a','ab','abc']);
+        expect(res.success).toBe(true);
+    });
+
+    test('On not included', ()=> {
+        const res = new VP().v('ac').isIn(['a','ab','abc']);
         expect(res.success).toBe(false);
     });
 
