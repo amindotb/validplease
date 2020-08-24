@@ -28,7 +28,7 @@ module.exports = class ValidPlease {
     required()
     {
         this._check();
-        if(this.input == null || this.input == undefined || this.input === '')
+        if(this.input == null || this.input == undefined || this.input === '' || !this.hasOwnProperty("input"))
             return this._break(`مقدار پارامتر ${this._alias()}اجباریست`);
         else
             return this;
@@ -102,7 +102,7 @@ module.exports = class ValidPlease {
     {
       this._check();
       let temp = this.input;
-      if (isNaN(+temp) || temp === '') 
+      if (isNaN(+temp) || temp === '' || (temp !== parseInt(temp)) ) 
         return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
       else
           return this;
