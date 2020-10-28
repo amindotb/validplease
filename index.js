@@ -102,7 +102,7 @@ module.exports = class ValidPlease {
     {
       this._check();
       let temp = this.input;
-      if (isNaN(+temp) || temp === '' || (temp !== parseInt(temp)) ) 
+      if (isNaN(+temp) || temp === '' || typeof temp !== "number" ) 
         return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
       else
           return this;

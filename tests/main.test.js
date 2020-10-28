@@ -228,7 +228,7 @@ describe("Checking scope: isInt()", () => {
 
     test('On correct string number', ()=> {
         const res = new VP().v('10').isInt();
-        expect(res.success).toBe(true);
+        expect(res.success).toBe(false);
     });
 
     test('On string', ()=> {
