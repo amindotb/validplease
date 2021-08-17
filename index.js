@@ -40,7 +40,7 @@ module.exports = class ValidPlease {
         if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
-        temp = parseInt(temp);
+        temp = +temp;
         
         if(m < temp)
             return this._break(`مقدار پارامتر ${this._alias()}بیشتر از مقدار درخواستی (${m}) است`);
@@ -54,7 +54,7 @@ module.exports = class ValidPlease {
         if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
         }
-        temp = parseInt(temp);
+        temp = +temp;
 
         if(m > temp)
             return this._break(`مقدار پارامتر ${this._alias()}کمتر از مقدار درخواستی (${m}) است`);
