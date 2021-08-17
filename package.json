@@ -1,6 +1,6 @@
 {
   "name": "validplease",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "A validator package with built-in Persian messages.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "author": "Amin Bagheri",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.6.3"
   },
   "dependencies": {},
   "directories": {
