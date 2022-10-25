@@ -27,7 +27,9 @@ module.exports = class ValidPlease {
 
     required()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         if(this.input == null || this.input == undefined || this.input === '' || !this.hasOwnProperty("input"))
             return this._break(`مقدار پارامتر ${this._alias()}اجباریست`);
         else
@@ -35,7 +37,9 @@ module.exports = class ValidPlease {
     }
 
     max(m) {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let temp = this.input;
         if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
@@ -49,7 +53,9 @@ module.exports = class ValidPlease {
     }
 
     min(m) {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let temp = this.input;
         if (isNaN(+temp) || temp === '') {
           return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
@@ -63,7 +69,9 @@ module.exports = class ValidPlease {
     }
 
     len(m) {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let temp = this.input;
         temp = temp + '';
         const len = temp.length;
@@ -75,7 +83,9 @@ module.exports = class ValidPlease {
     }
 
     maxLen(m) {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let temp = this.input;
         temp = temp + '';
         const len = temp.length;
@@ -87,7 +97,9 @@ module.exports = class ValidPlease {
     }
 
     minLen(m) {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let temp = this.input;
         temp = temp + '';
         const len = temp.length;
@@ -100,7 +112,9 @@ module.exports = class ValidPlease {
 
     isInt()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       let temp = this.input;
       if (isNaN(+temp) || temp === '' || typeof temp !== "number" ) 
         return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
@@ -110,7 +124,9 @@ module.exports = class ValidPlease {
 
     isBoolean()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         if(this.input === false || this.input === true)
             return this;
         else
@@ -119,7 +135,9 @@ module.exports = class ValidPlease {
 
     isEmail()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
         return this;
       else
@@ -128,7 +146,9 @@ module.exports = class ValidPlease {
 
     isMobile()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       if(/^09\d{9}$/.test(this.input))
         return this;
       else
@@ -138,7 +158,9 @@ module.exports = class ValidPlease {
 
     isDate(separator='-')
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       const pattern = `\\b^[0-9]{4}${separator}(0[1-9]|1[0-2])${separator}(0[1-9]|[1-2][0-9]|3[0-1])$\\b`;
       const regex = new RegExp(pattern);
       if(!regex.test(this.input))
@@ -149,7 +171,9 @@ module.exports = class ValidPlease {
 
     isMeliCode()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         let code = '' + this.input;
         let len = code.length;
         if(len < 8 || parseInt(code ,10)==0) 
@@ -172,7 +196,9 @@ module.exports = class ValidPlease {
 
     isPostalCode()
     {      
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^(\d{5}-?\d{5})$/);
         if(!regex.test(this.input))
           return this._break(`کد پستی را به درستی وارد کنید`);
@@ -182,7 +208,9 @@ module.exports = class ValidPlease {
 
     isPhone()
     {      
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^[2-9][0-9]{7}$/);
         if(!regex.test(this.input))
           return this._break(`شماره تلفن را به درستی وارد کنید`);
@@ -192,7 +220,9 @@ module.exports = class ValidPlease {
 
     isPersian()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^[\u0600-\u06F9\s]+$/);
         if(!regex.test(this.input))
           return this._break(`پارامتر ${this._alias()}را به فارسی وارد کنید`);
@@ -202,7 +232,9 @@ module.exports = class ValidPlease {
 
     isEnglish()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^[A-z0-9\s]+$/);
         if(!regex.test(this.input))
           return this._break(`پارامتر ${this._alias()}را به انگلیسی وارد کنید`);
@@ -212,7 +244,9 @@ module.exports = class ValidPlease {
 
     isPersianDigit()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^[\u06F0-\u06F9]+$/);
         if(!regex.test(this.input))
           return this._break(`پارامتر ${this._alias()}را به اعداد فارسی وارد کنید`);
@@ -222,7 +256,9 @@ module.exports = class ValidPlease {
 
     isEnglishDigit()
     {
-        this._check();
+        if(this.success === false) {
+            return this;
+        }
         const regex = new RegExp(/^[0-9]+$/);
         if(!regex.test(this.input))
           return this._break(`پارامتر ${this._alias()}را به اعداد انگلیسی وارد کنید`);
@@ -232,7 +268,9 @@ module.exports = class ValidPlease {
 
     isIP()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       const regex = new RegExp(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
@@ -242,7 +280,9 @@ module.exports = class ValidPlease {
 
     isIPv6()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       const regex = new RegExp(/^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
@@ -252,7 +292,9 @@ module.exports = class ValidPlease {
 
     isVersion()
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
         return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
@@ -262,7 +304,9 @@ module.exports = class ValidPlease {
 
     isIn(arr)
     {
-      this._check();
+      if(this.success === false) {
+            return this;
+        }
       
       if(!arr.includes(this.input))
         return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
