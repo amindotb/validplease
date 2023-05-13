@@ -9,7 +9,6 @@ Keep your eyes on new changes 🤩 in version 2.x (scroll down to see new method
 ------------
 Now you can select output messages in different languages ( 'en' for English, 'fa': for Persian, and more coming soon!) on initialize.
 Example:
-```
  ```
  const VP = require('validplease');
  const vp = new VP(VP.language.en);
