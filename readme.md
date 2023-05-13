@@ -1,9 +1,19 @@
 validplease
 ------------
 A JS module for input validation with custom Persian message.
-Keep your eyes on new changes 🤩 in version 2.x (scoll down to see new methods)
+Keep your eyes on new changes 🤩 in version 2.x (scroll down to see new methods)
 [![Thanks to rimadarji](https://cdn.dribbble.com/users/2129809/screenshots/4788950/validate1.png "Thanks to rimadarji")](https://dribbble.com/rimadarji "Thanks to rimadarji")
 
+
+### New update for different language support
+------------
+Now you can select output messages in different languages ( 'en' for English, 'fa': for Persian, and more coming soon!) on initialize.
+Example:
+```
+ ```
+ const VP = require('validplease');
+ const vp = new VP(VP.language.en);
+ ```
 
 
 ### Warm Up
@@ -19,7 +29,7 @@ Why should i use `validplease`?
 
 I accept any contributes with open arms \\./
 
-### Instalation
+### Installation
 ------------
  ```
 npm i validplease
@@ -62,7 +72,7 @@ console.log('output:', result);
 ### Methods
 ------------
 
-```.aliasName('Your alliar name')```        
+```.aliasName('Your alias name')```        
 // The Alias name for this variable which is going to use in messages  
 
 ```.required()```                           
@@ -99,7 +109,7 @@ console.log('output:', result);
 // Checks the input to be valid date (eg: 1399-03-25)  
 
 ```.isMeliCode()```                         
-// Checks the input to be a valid Iranian natinal code format (Code Meli) 
+// Checks the input to be a valid Iranian national code format (Code Meli) 
 
 ```.isPostalCode()```                          
 // Checks if is a valid postal code  

@@ -1,11 +1,17 @@
+const dictionary = require('./dictionary');
 module.exports = class ValidPlease {
-    
-    constructor()
+    static language = {
+        en: 'en',
+        fa: 'fa',
+    };
+
+    constructor(language = this.language.fa)
     {
         this.input = null;
         this.alias = null;
         this.message = null;
         this.success = true;
+        this.language = language;
     }
 
     v(inputs)
@@ -31,7 +37,7 @@ module.exports = class ValidPlease {
             return this;
         }
         if(this.input == null || this.input == undefined || this.input === '' || !this.hasOwnProperty("input"))
-            return this._break(`مقدار پارامتر ${this._alias()}اجباریست`);
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].isRequired}`);
         else
             return this;
     }
@@ -42,12 +48,12 @@ module.exports = class ValidPlease {
         }
         let temp = this.input;
         if (isNaN(+temp) || temp === '') {
-          return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeNumeric}`);
         }
         temp = +temp;
         
         if(m < temp)
-            return this._break(`مقدار پارامتر ${this._alias()}بیشتر از مقدار درخواستی (${m}) است`);
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeLessThanOrEqual} (${m}) ${dictionary[this.language].be}`);
         else
             return this;
     }
@@ -58,12 +64,12 @@ module.exports = class ValidPlease {
         }
         let temp = this.input;
         if (isNaN(+temp) || temp === '') {
-          return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeNumeric}`);
         }
         temp = +temp;
 
         if(m > temp)
-            return this._break(`مقدار پارامتر ${this._alias()}کمتر از مقدار درخواستی (${m}) است`);
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeGraterThanOrEqual} (${m}) ${dictionary[this.language].be}`);
         else
             return this;
     }
@@ -77,7 +83,7 @@ module.exports = class ValidPlease {
         const len = temp.length;
         
         if(m !== len)
-            return this._break(`طول پارامتر ${this._alias()}باید (${m}) کاراکتر باشد`);
+            return this._break(`${dictionary[this.language].theLengthOf} ${this._alias()} ${dictionary[this.language].mustBe} (${m}) ${dictionary[this.language].be}`);
         else
             return this;
     }
@@ -91,7 +97,7 @@ module.exports = class ValidPlease {
         const len = temp.length;
         
         if(m < len)
-            return this._break(`طول پارامتر ${this._alias()}بیشتر از (${m}) کاراکتر است`);
+            return this._break(`${dictionary[this.language].theLengthOf} ${this._alias()} ${dictionary[this.language].mustBeLessThanOrEqual} (${m}) ${dictionary[this.language].be}`);
         else
             return this;
     }
@@ -105,7 +111,7 @@ module.exports = class ValidPlease {
         const len = temp.length;
         
         if(m > len)
-            return this._break(`طول پارامتر ${this._alias()}کمتر از (${m}) کاراکتر است`);
+            return this._break(`${dictionary[this.language].theLengthOf} ${this._alias()} ${dictionary[this.language].mustBeGraterThanOrEqual} (${m}) ${dictionary[this.language].be}`);
         else
             return this;
     }
@@ -116,10 +122,11 @@ module.exports = class ValidPlease {
             return this;
         }
       let temp = this.input;
-      if (isNaN(+temp) || temp === '' || typeof temp !== "number" ) 
-        return this._break(`مقدار پارامتر ${this._alias()}را به صورت عددی وارد نمایید`);
-      else
+      if (isNaN(+temp) || temp === '' || typeof temp !== "number" ) {
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeNumeric}`);
+      } else {
           return this;
+      }
     }
 
     isBoolean()
@@ -127,10 +134,11 @@ module.exports = class ValidPlease {
         if(this.success === false) {
             return this;
         }
-        if(this.input === false || this.input === true)
+        if(this.input === false || this.input === true) {
             return this;
-        else
-            return this._break(`مقدار پارامتر ${this._alias()}را به صورت درست،غلط ارسال نمایید`);
+        } else {
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeBoolean}`);
+        }
     }
 
     isEmail()
@@ -141,7 +149,7 @@ module.exports = class ValidPlease {
       if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.input))
         return this;
       else
-        return this._break(`پارامتر ${this._alias()}را به صورت یک آدرس ایمیل صحیح وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidEmail}`);
     }
 
     isMobile()
@@ -152,7 +160,7 @@ module.exports = class ValidPlease {
       if(/^09\d{9}$/.test(this.input))
         return this;
       else
-        return this._break(`پارامتر ${this._alias()}را به فرمت موبایل ...09 وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidMobile}`);
     }
 
 
@@ -164,7 +172,7 @@ module.exports = class ValidPlease {
       const pattern = `\\b^[0-9]{4}${separator}(0[1-9]|1[0-2])${separator}(0[1-9]|[1-2][0-9]|3[0-1])$\\b`;
       const regex = new RegExp(pattern);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidDate}`);
         else
             return this;
     }
@@ -191,7 +199,7 @@ module.exports = class ValidPlease {
             return this;
         }
         else
-            return this._break(`مقدار کد ملی را به درستی وارد نمایید`);
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidIdNo}`);
     }
 
     isPostalCode()
@@ -201,7 +209,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^(\d{5}-?\d{5})$/);
         if(!regex.test(this.input))
-          return this._break(`کد پستی را به درستی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidPostalCode}`);
           else
               return this;
     }
@@ -213,7 +221,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^[2-9][0-9]{7}$/);
         if(!regex.test(this.input))
-          return this._break(`شماره تلفن را به درستی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidPhone}`);
           else
               return this;
     }
@@ -225,7 +233,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^[\u0600-\u06F9\s]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()}را به فارسی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeInPersian}`);
           else
               return this;
     }
@@ -237,7 +245,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^[A-z0-9\s]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()}را به انگلیسی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeInEnglish}`);
           else
               return this;
     }
@@ -249,7 +257,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^[\u06F0-\u06F9]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()}را به اعداد فارسی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeInPersianDigit}`);
           else
               return this;
     }
@@ -261,7 +269,7 @@ module.exports = class ValidPlease {
         }
         const regex = new RegExp(/^[0-9]+$/);
         if(!regex.test(this.input))
-          return this._break(`پارامتر ${this._alias()}را به اعداد انگلیسی وارد کنید`);
+          return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeInEnglishDigit}`);
           else
               return this;
     }
@@ -273,7 +281,7 @@ module.exports = class ValidPlease {
         }
       const regex = new RegExp(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidIpV4}`);
         else
             return this;
     }
@@ -285,7 +293,7 @@ module.exports = class ValidPlease {
         }
       const regex = new RegExp(/^(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidIpV6}`);
         else
             return this;
     }
@@ -297,7 +305,7 @@ module.exports = class ValidPlease {
         }
       const regex = new RegExp(/^((\d+)\.){0,3}(\d+)$/);
       if(!regex.test(this.input))
-        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeValidVersion}`);
         else
             return this;
     }
@@ -309,7 +317,7 @@ module.exports = class ValidPlease {
         }
       
       if(!arr.includes(this.input))
-        return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+        return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].mustBeIn}`);
         else
             return this;
     }
@@ -317,7 +325,7 @@ module.exports = class ValidPlease {
     pattern(pat) {
         const regex = new RegExp(pat);
         if(!regex.test(this.input))
-            return this._break(`پارامتر ${this._alias()}را به درستی وارد نمایید`);
+            return this._break(`${dictionary[this.language].theValueOf} ${this._alias()} ${dictionary[this.language].isNotCorrect}`);
         else
             return this;
     }
